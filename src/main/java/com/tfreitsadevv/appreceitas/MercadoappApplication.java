@@ -58,6 +58,11 @@ public class MercadoappApplication implements CommandLineRunner {
 		Categoria c1 = new Categoria(null, "Itens básicos");
 		Categoria c2 = new Categoria(null, "Limpeza");
 		Categoria c3 = new Categoria(null, "Frutas");
+		Categoria c4 = new Categoria(null, "Higiene");
+		Categoria c5 = new Categoria(null, "Biscoitos");
+		Categoria c6 = new Categoria(null, "Carnes");
+		Categoria c7 = new Categoria(null, "Verduras e Legumes");
+		Categoria c8 = new Categoria(null, "Bebidas");
 		
 		Produto p1 = new Produto(null, "Açúcar", "Refinado", "União", null, c1);
 		Produto p2 = new Produto(null, "Sal", "Refinado", "Cisne", null, c1);
@@ -90,7 +95,7 @@ public class MercadoappApplication implements CommandLineRunner {
 		p4.getItens().addAll(Arrays.asList(i6));
 		
 		
-		categoriaRepository.saveAll(Arrays.asList(c1, c2, c3));
+		categoriaRepository.saveAll(Arrays.asList(c1, c2, c3,c4,c5,c6,c7,c8));
 		produtoRepository.saveAll(Arrays.asList(p1,p2,p3,p4));
 		mercadoRepository.saveAll(Arrays.asList(m1,m2));
 		listaRepository.saveAll(Arrays.asList(l1,l2));

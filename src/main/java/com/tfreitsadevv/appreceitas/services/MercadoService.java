@@ -10,28 +10,28 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import com.tfreitsadevv.appreceitas.domain.Categoria;
-import com.tfreitsadevv.appreceitas.dto.CategoriaDTO;
-import com.tfreitsadevv.appreceitas.repositories.CategoriaRepository;
+import com.tfreitsadevv.appreceitas.domain.Mercado;
+import com.tfreitsadevv.appreceitas.dto.MercadoDTO;
+import com.tfreitsadevv.appreceitas.repositories.MercadoRepository;
 import com.tfreitsadevv.appreceitas.services.exceptions.ObjectNotFoundException;
 
 @Service
-public class CategoriaService {
+public class MercadoService {
 	
 	@Autowired
-	private CategoriaRepository repo;
+	private MercadoRepository repo;
 	
-	public Categoria find(Integer id) {
-		Optional<Categoria> obj = repo.findById(id);
+	public Mercado find(Integer id) {
+		Optional<Mercado> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 	
-	public Categoria insert(Categoria obj) {
+	public Mercado insert(Mercado obj) {
 		obj.setId(null);
 		return repo.save(obj);
 	}
 	
-	public Categoria update(Categoria obj) {
+	public Mercado update(Mercado obj) {
 		find(obj.getId());
 		return repo.save(obj);
 	}
@@ -41,22 +41,22 @@ public class CategoriaService {
 		try {
 		repo.deleteById(id); }
 		catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityViolationException("Não é possível excluir Categoria que possua produtos vinculados");
+			throw new DataIntegrityViolationException("Não é possível excluir Mercado que possua produtos vinculados");
 		}
 		
 	}
 	
-	public List<Categoria> findAll() {
+	public List<Mercado> findAll() {
 		return repo.findAll();
 	}
 	
-	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+	public Page<Mercado> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
 	}
 	
-	public Categoria fromDTO(CategoriaDTO objDto) {
-		return new Categoria(objDto.getId(), objDto.getNome());
+	public Mercado fromDTO(MercadoDTO objDto) {
+		return new Mercado(objDto.getId(), objDto.getNome());
 	}
 	
 }

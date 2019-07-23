@@ -7,10 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class ItemDaLista implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@JsonIgnore
 	@EmbeddedId
 	private ItemDaListaPK id = new ItemDaListaPK();
 	
@@ -38,10 +41,12 @@ public class ItemDaLista implements Serializable {
 		this.unidade = unidade;
 	}
 	
+	@JsonIgnore
 	public Produto getProduto() {
 		return id.getProduto();
 	}
 	
+	@JsonIgnore
 	public Lista getLista() {
 		return id.getLista();
 	}

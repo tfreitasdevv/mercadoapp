@@ -1,6 +1,8 @@
 package com.tfreitsadevv.appreceitas.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Produto implements Serializable {
@@ -21,9 +26,13 @@ public class Produto implements Serializable {
 	private String fabricante;
 	private String codBarras;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "categoria_id")
 	private Categoria categoria;
+	
+	@OneToMany(mappedBy = "id.produto")
+	private Set<ItemDaLista> itens = new HashSet<>();
 	
 	public Produto() {		
 	}
@@ -109,6 +118,14 @@ public class Produto implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public Set<ItemDaLista> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemDaLista> itens) {
+		this.itens = itens;
 	}
 	
 	

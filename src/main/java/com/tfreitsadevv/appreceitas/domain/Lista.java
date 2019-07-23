@@ -2,13 +2,32 @@ package com.tfreitsadevv.appreceitas.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+@Entity
 public class Lista implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private Date data;
+	
+	@ManyToOne
+	@JoinColumn(name = "mercado_id")
 	private Mercado mercado;
+	
+	@OneToMany(mappedBy = "id.lista")
+	private Set<ItemDaLista> itens = new HashSet<>();
 	
 	public Lista() {		
 	}
@@ -67,6 +86,14 @@ public class Lista implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public Set<ItemDaLista> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemDaLista> itens) {
+		this.itens = itens;
 	}
 	
 	

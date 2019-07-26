@@ -10,9 +10,11 @@ import javax.persistence.ManyToOne;
 public class ItemDaListaPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	
 	@ManyToOne
 	@JoinColumn(name = "produto_id")
 	private Produto produto;
+	
 	
 	@ManyToOne
 	@JoinColumn(name = "lista_id")

@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class Lista implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -20,6 +22,8 @@ public class Lista implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date data;
 	
 	@ManyToOne
@@ -37,6 +41,14 @@ public class Lista implements Serializable {
 		this.id = id;
 		this.data = data;
 		this.mercado = mercado;
+	}
+	
+	public Double getValorTotal() {
+		double soma = 0.0;
+		for (ItemDaLista il : itens) {
+			soma += il.getSubtotal();
+		}
+		return soma;
 	}
 
 	public Integer getId() {

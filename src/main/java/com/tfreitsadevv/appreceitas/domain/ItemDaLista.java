@@ -41,14 +41,26 @@ public class ItemDaLista implements Serializable {
 		this.unidade = unidade;
 	}
 	
-	@JsonIgnore
+	public Double getSubtotal() {
+		return valor * quantidade;
+	}	
+	
+	//@JsonIgnore
 	public Produto getProduto() {
 		return id.getProduto();
+	}
+	
+	public void setProduto(Produto produto) {
+		id.setProduto(produto);
 	}
 	
 	@JsonIgnore
 	public Lista getLista() {
 		return id.getLista();
+	}
+	
+	public void setLista(Lista lista) {
+		id.setLista(lista);
 	}
 
 	public ItemDaListaPK getId() {

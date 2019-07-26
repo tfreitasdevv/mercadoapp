@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tfreitsadevv.appreceitas.domain.Mercado;
 import com.tfreitsadevv.appreceitas.dto.MercadoDTO;
@@ -26,6 +27,7 @@ public class MercadoService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 	
+	@Transactional
 	public Mercado insert(Mercado obj) {
 		obj.setId(null);
 		return repo.save(obj);
@@ -41,7 +43,7 @@ public class MercadoService {
 		try {
 		repo.deleteById(id); }
 		catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityViolationException("Não é possível excluir Mercado que possua produtos vinculados");
+			throw new DataIntegrityViolationException("Não é possível excluir Mercado que possua listas vinculadas");
 		}
 		
 	}

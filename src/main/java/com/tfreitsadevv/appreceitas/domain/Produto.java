@@ -31,6 +31,7 @@ public class Produto implements Serializable {
 	@JoinColumn(name = "categoria_id")
 	private Categoria categoria;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "id.produto")
 	private Set<ItemDaLista> itens = new HashSet<>();
 	

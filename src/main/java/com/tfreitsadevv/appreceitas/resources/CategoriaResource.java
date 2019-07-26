@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.tfreitsadevv.appreceitas.domain.Categoria;
+import com.tfreitsadevv.appreceitas.domain.Produto;
 import com.tfreitsadevv.appreceitas.dto.CategoriaDTO;
+import com.tfreitsadevv.appreceitas.dto.ProdutoCatDTO;
 import com.tfreitsadevv.appreceitas.services.CategoriaService;
+import com.tfreitsadevv.appreceitas.services.ProdutoService;
 
 @RestController
 @RequestMapping(value = "/categorias")
@@ -27,6 +30,9 @@ public class CategoriaResource {
 	
 	@Autowired
 	private CategoriaService service;
+	
+	@Autowired
+	private ProdutoService produtoService;
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
@@ -71,6 +77,13 @@ public class CategoriaResource {
 			@RequestParam(value = "direction", defaultValue = "ASC" ) String direction) {
 		Page<Categoria> list = service.findPage(page, linesPerPage, orderBy, direction);
 		Page<CategoriaDTO> listDto = list.map(obj -> new CategoriaDTO(obj));
+		return ResponseEntity.ok().body(listDto);
+	}
+	
+	@RequestMapping(value = "/{categoriaId}/produtos", method = RequestMethod.GET)
+	public ResponseEntity<List<ProdutoCatDTO>> findProdutos(@PathVariable Integer categoriaId){
+		List<Produto> list = produtoService.findByCategoria(categoriaId);
+		List<ProdutoCatDTO> listDto = list.stream().map(obj -> new ProdutoCatDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
 	}
 	

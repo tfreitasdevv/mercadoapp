@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tfreitsadevv.appreceitas.domain.Unidade;
 import com.tfreitsadevv.appreceitas.dto.UnidadeDTO;
@@ -26,6 +27,7 @@ public class UnidadeService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 	
+	@Transactional
 	public Unidade insert(Unidade obj) {
 		obj.setId(null);
 		return repo.save(obj);
@@ -41,7 +43,7 @@ public class UnidadeService {
 		try {
 		repo.deleteById(id); }
 		catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityViolationException("Não é possível excluir Unidade que possua produtos vinculados");
+			throw new DataIntegrityViolationException("Não é possível excluir Unidade que possua listas vinculadas");
 		}
 		
 	}
